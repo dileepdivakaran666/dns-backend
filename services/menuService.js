@@ -1,4 +1,5 @@
 const Menu = require("../models/menu");
+const menuItem = require("../models/menuItem");
 const MenuItem = require("../models/menuItem");
 
 const createMenu = async (name, description) => {
@@ -20,7 +21,12 @@ const addItemToMenu = async (menuId, itemData) => {
 };
 
 const deleteMenuById = async (id) => {
-    return await Menu.findByIdAndDelete(id)
+   const deletedItem = await Menu.findByIdAndDelete(id)
+   if (!deletedItem) {
+    throw new Error("Menu not found");
+}
+   await MenuItem.updateMany({ menu: id }, { $unset: { menu: "" } });
+    return deletedItem
 };
 
 module.exports = { createMenu, getAllMenus, getMenuById, addItemToMenu, deleteMenuById };
