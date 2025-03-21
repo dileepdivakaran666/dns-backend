@@ -6,9 +6,9 @@ const dotenv = require('dotenv')
 const authRoutes = require('./routes/authRoutes')
 const menuRoutes = require('./routes/menuRoutes')
 const menuItemRoutes = require('./routes/menuItemRoutes')
+const connectDB = require('./config/db')
 
 
-const connectDB = require('./Config/db')
 dotenv.config()
 connectDB()
 
