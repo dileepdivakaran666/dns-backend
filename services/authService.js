@@ -23,7 +23,8 @@ const loginUser = async (email, password) => {
         return {error:"Invalid username or password"}
     }
     const token = jwt.sign({id: user._id, username: user.username, role:user.role}, process.env.JWT_SECRET_KEY, {expiresIn: '3 days'})
-    return {token}
+    const {password:_, ...userWithoutPassword} = user._doc
+    return {token,userWithoutPassword}
 }
 
 module.exports = {userRegister, loginUser}
